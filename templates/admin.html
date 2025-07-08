@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Portal</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Admin - View All Orders</h2>
+    <form method="POST">
+      <label for="password">Enter Admin Password:</label>
+      <input type="password" name="password" required>
+      <button type="submit">View Orders</button>
+    </form>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if content %}
+      <pre class="orders">{{ content }}</pre>
+    {% endif %}
+  </div>
+</body>
+</html>

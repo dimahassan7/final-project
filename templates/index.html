@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order - The Burger Spot</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>The Burger Spot</h1>
+    <a href="/admin">Admin</a>
+  </div>
+  <div class="container">
+    <h2>Build Your Order</h2>
+    <form method="POST" action="/receipt">
+      <label for="customer_name">Customer Name:</label>
+      <input type="text" name="customer_name" required><br><br>
+
+      {% for category, items in menu.items() %}
+        <h3>{{ category }}</h3>
+        <div class="menu-grid">
+          {% for item in items %}
+          <div class="menu-card">
+            <img src="{{ item.image }}" alt="{{ item.name }}">
+            <label>
+              <input type="checkbox" name="item" value="{{ item.name }}">
+              {{ item.name }}<br>
+              <span>${{ '%.2f'|format(item.price) }}</span>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+</body>
+</html>
+
