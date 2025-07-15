@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Receipt</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Thank you, {{ customer }}!</h2>
+    <h3>Your Receipt:</h3>
+    <ul class="receipt-list">
+      {% for item in order %}
+        <li>{{ item.name }} - ${{ '%.2f'|format(item.price) }}</li>
+      {% endfor %}
+    </ul>
+    <h3>Total: ${{ '%.2f'|format(total) }}</h3>
+    <a href="/">Order Again</a>
+  </div>
+</body>
+</html>
+
