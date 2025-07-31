@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="nav">
+    <h1>Admin Dashboard</h1>
+    <div>
+      <a href="/">Home</a> |
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>All Orders</h2>
+
+    {% if content %}
+      <pre class="orders">{{ content }}</pre>
+      <form method="POST" action="/admin/clear_orders" style="margin-top: 20px;">
+        <button type="submit" style="background-color: #dc3545;">Clear All Orders</button>
+      </form>
+    {% else %}
+      <p>No orders found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
+

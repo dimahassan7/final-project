@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order - The Burger Spot</title>
+  <title>The Burger Spot</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <div class="nav">
     <h1>The Burger Spot</h1>
-    <a href="/admin">Admin</a>
+    <div>
+      {% if user %}
+        <span>Welcome, {{ user }} | <a href="/logout">Logout</a></span>
+      {% else %}
+        <a href="/login">Login</a> |
+        <a href="/signup">Signup</a>
+      {% endif %}
+      |
+      <a href="/admin">Admin</a>
+    </div>
   </div>
+
+  <!-- Hero Banner -->
+  <div class="hero">
+    <h2>Welcome to The Burger Spot</h2>
+    <p>Serving juicy burgers, crispy sides, and refreshing drinks — all made to order.</p>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feature-box">
+      <h3>🍔 Fresh Ingredients</h3>
+      <p>We use only the freshest produce and locally sourced beef for every burger.</p>
+    </div>
+    <div class="feature-box">
+      <h3>⚡ Fast Service</h3>
+      <p>Order online and get your food ready in minutes. No long waits!</p>
+    </div>
+    <div class="feature-box">
+      <h3>⭐ Rated #1</h3>
+      <p>Loved by locals — come see why we’re the top burger spot in town.</p>
+    </div>
+  </div>
+
   <div class="container">
     <h2>Build Your Order</h2>
     <form method="POST" action="/receipt">
@@ -35,4 +67,8 @@
   </div>
 </body>
 </html>
+
+
+
+
 

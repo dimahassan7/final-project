@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Portal</title>
+  <title>Signup</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <div class="nav">
     <h1>The Burger Spot</h1>
     <div>
-      <a href="/">Home</a>
+      <a href="/">Home</a> |
+      <a href="/login">Login</a>
     </div>
   </div>
-
   <div class="container">
-    <h2>Admin Login</h2>
+    <h2>Create an Account</h2>
     <form method="POST">
-      <label>Enter Admin Password:</label>
+      <label>Email:</label>
+      <input type="text" name="email" required>
+
+      <label>Password:</label>
       <input type="password" name="password" required>
-      <button type="submit">Login</button>
+
+      <button type="submit">Sign Up</button>
     </form>
+
+    <p>Already have an account? <a href="/login">Log in here</a></p>
 
     {% if error %}
       <p class="error">{{ error }}</p>
@@ -26,5 +32,4 @@
   </div>
 </body>
 </html>
-
 

@@ -5,17 +5,34 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <div class="nav">
+    <h1>The Burger Spot</h1>
+    <div>
+      {% if user %}
+        <span>Welcome, {{ user }} | <a href="/logout">Logout</a></span>
+      {% else %}
+        <a href="/login">Login</a> |
+        <a href="/signup">Signup</a>
+      {% endif %}
+      |
+      <a href="/admin">Admin</a>
+    </div>
+  </div>
+
   <div class="container">
     <h2>Thank you, {{ customer }}!</h2>
-    <h3>Your Receipt:</h3>
+    <h3>Your Receipt</h3>
     <ul class="receipt-list">
       {% for item in order %}
         <li>{{ item.name }} - ${{ '%.2f'|format(item.price) }}</li>
       {% endfor %}
     </ul>
     <h3>Total: ${{ '%.2f'|format(total) }}</h3>
-    <a href="/">Order Again</a>
+    <br>
+    <a href="/"><button>Order Again</button></a>
   </div>
 </body>
 </html>
+
+
 
