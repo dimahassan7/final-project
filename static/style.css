@@ -144,7 +144,7 @@ pre.orders {
   font-family: 'Courier New', Courier, monospace;
   max-height: 400px;
   overflow-y: auto;
-}
+} 
 
 /* Error Message */
 .error {
@@ -217,7 +217,8 @@ pre.orders {
   .menu-card {
     width: 100%;
   }
-}
+} 
+
 
 
 
