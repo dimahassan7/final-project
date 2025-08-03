@@ -161,7 +161,6 @@ pre.orders {
   padding: 60px 20px;
 }
 
-
 .hero h2 {
   font-size: 36px; 
   margin-bottom: 10px;
@@ -219,35 +218,65 @@ pre.orders {
     width: 100%;
   }
 } 
+
 /* Footer Styles */
 .footer {
-  background-color: #1e1e2f; /* dark background */
-  color: white;              /* white text */
-  padding: 30px 20px;        /* spacing */
-  margin-top: auto;          /* push footer to bottom if using flex layout */
-  text-align: center;        /* center the content */
+  background-color: #1e1e2f;
+  color: #ffc107;  /* make footer text bright yellow for visibility */
+  padding: 16px 0;  /* slim footer */
+  border-top: 2px solid #ffc107;
+  text-align: left;
   font-size: 14px;
-  border-top: 2px solid #ffc107; /* subtle top border for accent */
 }
 
-.footer a {
-  color: #ffc107;            /* link color */
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+  margin: 10px 0;
+}
+
+.footer-section h4 {
+  margin-bottom: 6px;
+  font-size: 15px;  
+  color: #ffc107;
+}
+
+.footer-section p, 
+.footer-section a {  
+  font-size: 14px;  
+  line-height: 1.4;
+  color: #ffc107; /* bright yellow for links and text */
   text-decoration: none;
-  margin: 0 8px;
 }
 
-.footer a:hover {
+.footer-section a:hover {
   color: #ffdd57;
   text-decoration: underline;
 }
 
-/* Responsive tweaks */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .footer {
-    font-size: 12px;
-    padding: 20px 10px;
+  .footer .footer-content {
+    flex-direction: column;
+    text-align: center;
   }
-} 
+
+  .footer-section {
+    margin-bottom: 15px;
+  }
+}
+
+
+
 
 
 
