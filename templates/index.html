@@ -50,6 +50,22 @@
       <label for="customer_name">Customer Name:</label>
       <input type="text" name="customer_name" required><br><br>
 
+      <!-- Pickup / Delivery Option -->
+      <label>Order Type:</label><br>
+      <input type="radio" name="order_type" value="Pickup" id="pickup" required onclick="toggleDelivery(false)">
+      <label for="pickup">Pickup</label><br>
+      <input type="radio" name="order_type" value="Delivery" id="delivery" onclick="toggleDelivery(true)">
+      <label for="delivery">Delivery</label><br><br>
+
+      <!-- Delivery Fields -->
+      <div id="delivery-fields" style="display: none;">
+        <label for="phone">Phone Number:</label>
+        <input type="text" name="phone" placeholder="(555) 123-4567"><br><br>
+
+        <label for="address">Delivery Address:</label>
+        <input type="text" name="address" placeholder="123 Burger Lane"><br><br>
+      </div>
+
       {% for category, items in menu.items() %}
         <h3>{{ category }}</h3>
         <div class="menu-grid">
@@ -73,8 +89,8 @@
     <div class="container footer-content">
       <div class="footer-section contact">
         <h4>Contact Us</h4>
-        <p>Email: support@theburgerspot.com</p>
-        <p>Phone: (555) 123-4567</p>
+        <p>Email: <a href="mailto:support@theburgerspot.com">support@theburgerspot.com</a></p>
+        <p>Phone: <a href="tel:+15551234567">(555) 123-4567</a></p>
         <p>Address: 123 Burger Lane, Foodtown</p>
       </div>
       <div class="footer-section hours">
@@ -92,8 +108,17 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    function toggleDelivery(show) {
+      document.getElementById('delivery-fields').style.display = show ? 'block' : 'none';
+    }
+  </script>
 </body>
 </html>
+
+
+
 
 
 

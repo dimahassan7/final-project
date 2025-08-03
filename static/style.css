@@ -153,16 +153,17 @@ pre.orders {
   margin-top: 10px;
 }
 
-/* Hero Section (Moved outside media query) */
+/* Hero Section */
 .hero {
-  background: #343a40;
+  background: #add8e6;
   color: white;
   text-align: center;
   padding: 60px 20px;
 }
 
+
 .hero h2 {
-  font-size: 36px;
+  font-size: 36px; 
   margin-bottom: 10px;
 }
 
@@ -171,7 +172,7 @@ pre.orders {
   color: #ddd;
 }
 
-/* Features Section (Moved outside media query) */
+/* Hero Section */ 
 .features {
   display: flex;
   justify-content: space-around;
@@ -216,6 +217,35 @@ pre.orders {
 
   .menu-card {
     width: 100%;
+  }
+} 
+/* Footer Styles */
+.footer {
+  background-color: #1e1e2f; /* dark background */
+  color: white;              /* white text */
+  padding: 30px 20px;        /* spacing */
+  margin-top: auto;          /* push footer to bottom if using flex layout */
+  text-align: center;        /* center the content */
+  font-size: 14px;
+  border-top: 2px solid #ffc107; /* subtle top border for accent */
+}
+
+.footer a {
+  color: #ffc107;            /* link color */
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.footer a:hover {
+  color: #ffdd57;
+  text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .footer {
+    font-size: 12px;
+    padding: 20px 10px;
   }
 } 
 

@@ -3,16 +3,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from models import MenuItem, Order, User
 from database import init_db
+from database import get_connection
 init_db()
-
 
 app = Flask(__name__)
 app.secret_key = "your_secure_secret_key_here"
 
-ORDERS_FILE = "orders.txt"
+ORDERS_FILE = "orders.txt" 
 USERS_FILE = "users.txt"
 ADMIN_PASSWORD = "admin123"
-
+  
 menu = {
     "Burgers": [
         MenuItem("Classic Burger", 5.99, "/static/images/classic.jpg", "Burgers"),
@@ -40,8 +40,6 @@ menu = {
 def index():
     return render_template("index.html", menu=menu, user=session.get("user"))
 
-from database import get_connection
-
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -60,13 +58,12 @@ def signup():
             conn.commit()
             session["user"] = email
             return redirect(url_for("index"))
-        except sqlite3.IntegrityError:
+        except:
             return render_template("signup.html", error="Email already exists.")
         finally:
             conn.close()
 
     return render_template("signup.html")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -88,7 +85,6 @@ def login():
 
     return render_template("login.html")
 
-
 @app.route("/logout")
 def logout():
     session.clear()
@@ -97,23 +93,36 @@ def logout():
 @app.route("/receipt", methods=["POST"])
 def receipt():
     name = request.form.get("customer_name", "Guest").strip()
+    order_type = request.form.get("order_type", "Pickup")
+    phone = request.form.get("phone", "").strip()
+    address = request.form.get("address", "").strip()
     selected_names = request.form.getlist("item")
 
     if not selected_names:
         return render_template("index.html", menu=menu, user=session.get("user"), error="Select at least one item.")
+
+    # If Delivery is selected, require phone and address
+    if order_type == "Delivery":
+        if not phone or not address:
+            return render_template("index.html", menu=menu, user=session.get("user"),
+                                   error="Please provide phone number and delivery address for Delivery orders.")
 
     order_items = []
     total = 0
 
     for category in menu.values():
         for item in category:
-            if item.name in selected_names:  # use item.name, assuming MenuItem attribute is 'name'
+            if item.name in selected_names:
                 order_items.append(item)
                 total += item.price
 
     conn = get_connection()
     c = conn.cursor()
-    c.execute("INSERT INTO orders (customer, user, total) VALUES (?, ?, ?)", (name, session.get("user", "guest"), total))
+    c.execute(
+        "INSERT INTO orders (customer, user, total, order_type, phone, address) VALUES (?, ?, ?, ?, ?, ?)",
+        (name, session.get("user", "guest"), total, order_type, phone if order_type == "Delivery" else None,
+         address if order_type == "Delivery" else None)
+    )
     order_id = c.lastrowid
 
     for item in order_items:
@@ -123,8 +132,8 @@ def receipt():
     conn.commit()
     conn.close()
 
-    return render_template("receipt.html", order=order_items, total=total, customer=name, user=session.get("user"))
-
+    return render_template("receipt.html", order=order_items, total=total, customer=name, user=session.get("user"),
+                           order_type=order_type, phone=phone, address=address)
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
@@ -149,8 +158,10 @@ def admin_dashboard():
 
     output = ""
     for order in orders:
-        order_id, customer, user, total = order
-        output += f"Order #{order_id} - {customer} (User: {user})\n"
+        order_id, customer, user, total, order_type, phone, address = order
+        output += f"Order #{order_id} - {customer} (User: {user}) - {order_type}\n"
+        if order_type == "Delivery":
+            output += f"Phone: {phone}, Address: {address}\n"
         c.execute("SELECT item_name, item_price FROM order_items WHERE order_id = ?", (order_id,))
         items = c.fetchall()
         for name, price in items:
@@ -174,9 +185,10 @@ def clear_orders():
 
     return redirect(url_for("admin_dashboard"))
 
-
 if __name__ == "__main__":
     app.run(debug=True)
+
+ 
 
 
 

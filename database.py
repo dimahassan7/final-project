@@ -15,7 +15,7 @@ def init_db():
         )
     ''')
 
-    # Orders table
+    # Orders table creation (if missing)
     c.execute('''
         CREATE TABLE IF NOT EXISTS orders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,12 +25,27 @@ def init_db():
         )
     ''')
 
+    try:
+        c.execute("ALTER TABLE orders ADD COLUMN order_type TEXT")
+    except sqlite3.OperationalError:
+        pass  # column already exists
+
+    try:
+        c.execute("ALTER TABLE orders ADD COLUMN phone TEXT")
+    except sqlite3.OperationalError:
+        pass  # column already exists
+
+    try:
+        c.execute("ALTER TABLE orders ADD COLUMN address TEXT")
+    except sqlite3.OperationalError:
+        pass  # column already exists
+
     # Order items table
     c.execute('''
         CREATE TABLE IF NOT EXISTS order_items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             order_id INTEGER,
-            item_name TEXT,
+            item_name TEXT, 
             item_price REAL,
             FOREIGN KEY(order_id) REFERENCES orders(id)
         )
@@ -38,3 +53,5 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+

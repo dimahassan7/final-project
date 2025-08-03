@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -24,11 +24,20 @@
   <main class="container">
     <h2>Thank you, {{ customer }}!</h2>
     <h3>Your Receipt</h3>
+    
+    <p><strong>Order Type:</strong> {{ order_type }}</p>
+
+    {% if order_type == "Delivery" %}
+      <p><strong>Phone:</strong> {{ phone }}</p>
+      <p><strong>Address:</strong> {{ address }}</p>
+    {% endif %}
+
     <ul class="receipt-list">
       {% for item in order %}
         <li>{{ item.name }} - ${{ '%.2f'|format(item.price) }}</li>
       {% endfor %}
     </ul>
+
     <h3>Total: ${{ '%.2f'|format(total) }}</h3>
     <br />
     <a href="/"><button type="button">Order Again</button></a>
@@ -38,15 +47,15 @@
     <div class="container footer-content">
       <div class="footer-section contact">
         <h4>Contact Us</h4>
-        <p>Email: support@theburgerspot.com</p>
-        <p>Phone: (555) 123-4567</p>
+        <p>Email: <a href="mailto:support@theburgerspot.com">support@theburgerspot.com</a></p>
+        <p>Phone: <a href="tel:+15551234567">(555) 123-4567</a></p>
         <p>Address: 123 Burger Lane, Foodtown</p>
       </div>
       <div class="footer-section hours">
         <h4>Hours</h4>
         <p>Mon-Fri: 10am - 9pm</p>
         <p>Sat-Sun: 11am - 10pm</p>
-      </div>
+      </div> 
       <div class="footer-section social">
         <h4>Follow Us</h4>
         <p>
@@ -59,6 +68,9 @@
   </footer>
 </body>
 </html>
+  
+
+
 
 
 
